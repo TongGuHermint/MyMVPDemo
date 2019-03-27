@@ -1,7 +1,9 @@
 package com.tgjs.dql.mymvpdemo.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,10 +18,11 @@ import com.tgjs.dql.mymvpdemo.view.IndexView;
 public class MainActivity extends BaseActivity<IndexView,IndexPresenter> implements IndexView {
 	private RecyclerView lv;
 	private ProgressBar pb;
+
 	private MyAdapter adapter;
 	@Override
 	public IndexPresenter initPresenter() {
-		return new IndexPresenter();
+		return new IndexPresenter(this);
 	}
 
 	@Override
@@ -57,9 +60,13 @@ public class MainActivity extends BaseActivity<IndexView,IndexPresenter> impleme
 
 	@Override
 	public void initData(IndexEntity indexEntity) {
-		lv.setLayoutManager(new LinearLayoutManager(this));
+		LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+		layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+		lv.setLayoutManager(layoutManager);
 		adapter = new MyAdapter(null);
 		lv.setAdapter(adapter);
 		adapter.addData(indexEntity.getData());
+		PagerSnapHelper snapHelper = new PagerSnapHelper();
+		snapHelper.attachToRecyclerView(lv);
 	}
 }

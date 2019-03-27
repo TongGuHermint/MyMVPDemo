@@ -1,5 +1,7 @@
 package com.tgjs.dql.mymvpdemo.presenter;
 
+import android.app.ProgressDialog;
+
 import com.google.gson.Gson;
 import com.tgjs.dql.mymvpdemo.base.BaseDtataModel;
 import com.tgjs.dql.mymvpdemo.base.BaseModel;
@@ -19,17 +21,17 @@ import static com.tgjs.dql.mymvpdemo.constants.RequestWhatI.REQUEST_WHAT_INDEX;
 
 public class IndexPresenter extends BasePresenter<IndexView> {
 	private IndexView indexView;
-	private BaseDtataModel iBaseData;
+	private BaseDtataModel baseDtataModel;
 	private Gson mGson;
-	public IndexPresenter() {
-		iBaseData = new BaseModel();
+	public IndexPresenter(IndexView view) {
+		this.indexView = view;
+		baseDtataModel = new BaseModel();
 		mGson = new Gson();
 	}
 
 	public void loadData() {
 		indexView.showLoading();
-		TreeMap<String,String> paramsTreeMap = new TreeMap<>();
-		iBaseData.postDataString(Constant.LISTURL,REQUEST_WHAT_INDEX,"index",paramsTreeMap,false, new OnDataCallBack() {
+		baseDtataModel.getDataString(Constant.LISTURL,REQUEST_WHAT_INDEX,false, new OnDataCallBack() {
 			@Override
 			public void onSuccess(String response) {
 				IndexEntity indexEntity = mGson.fromJson(response,IndexEntity.class);

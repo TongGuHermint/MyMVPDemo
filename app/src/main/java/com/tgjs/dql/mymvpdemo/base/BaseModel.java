@@ -73,13 +73,13 @@ public class BaseModel implements BaseDtataModel{
 		OkGo.<String>get(url).execute(new StringCallback() {
 			@Override
 			public void onSuccess(Response<String> response) {
-				progressDialog.dismiss();
+//				progressDialog.dismiss();
 				onDataCallBack.onSuccess(response.body().toString().trim());
 			}
 
 			@Override
 			public void onError(Response<String> response) {
-				progressDialog.dismiss();
+//				progressDialog.dismiss();
 				onDataCallBack.onFailed(response.body().toString().trim());
 			}
 		});
